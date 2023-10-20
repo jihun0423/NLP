@@ -32,5 +32,5 @@
 * 10.12 : encoder-decoder 모델은 교사학습 (teacher forcing)을 위한 학습용 모델과, 예측용 모델을 따로 만들어야 한다는 것을 알게되었다. 기존 딥러닝 모델들과는 다르게 ground truth값을 다음 인풋으로 넣고 학습을 통해 오차를 줄이는 구조로 되어있기에 그렇다. (inference때는 인풋을 넣은 뒤에 나온 예측 값을 다음 인풋으로 넣는 기존의 RNN 모델들과 동일하다.)
 처음 훈련시 encoder 모델에서 return_state=True를 통하여 hidden state와 cell state를 반환하고, 이를 decoder 모델의 초기 initial state가 된다.
 또 한가지 흥미로웠던 점은, encoder 모델에서는 패딩을 앞에, decoder 모델에서는 패딩을 뒤로 한다는 점이다. LSTM모델들의 특성상 장기기억 보다는 단기기억이 좀 더 중요하게 적용되는데, encoder의 인풋의 뒷부분에 패딩을 하게되면 패딩한 부분들의 단기기억들에 더 많은 집중이 되고, 이 상태가 decoder모델로 teacher forcing을 위하여 넘어가게 되니 좋지 않은 결과가 나오게 된다. 반면 decoder의 인풋의 앞부분에 패딩을 하게 되면 교사학습이 되지 않으므로 기존에 하던 것처럼 패딩을 뒤에 넣어야한다.
-* 10.15 : 영어를 인풋으로 넣으면 한국어로 번역한 결과를 내주는 encoder-decoder 모델을 구현해 보았다. 크게 보면 이전에 했던 lstm 모델들을 2개 이어붙이는 모양이지만, train과 inference시에 사용할 모델을 따로 구성해 주어야 한다는 것이 불편하였다. 영어의 경우 pretrained word embedding 값을 쉽게 구할 수 있었지만, 한국어는 없었기에 input에 사용된 단어들로만 구성된 embedding vector을 생성해야 했기에 아무래도 정밀도가 매우 떨어질 것 같다.
-* 10.18: 
+* 10.15 : 영어를 인풋으로 넣으면 한국어로 번역한 결과를 내주는 encoder-decoder 모델을 구현해 보았다. 크게 보면 이전에 했던 lstm 모델들을 2개 이어붙이는 모양이지만, train과 inference시에 사용할 모델을 따로 구성해 주어야 한다는 것이 불편하였다. 영어의 경우 pretrained word embedding 값을 쉽게 구할 수 있었지만, 한국어는 사용하지 않았기에 input에 사용된 단어들로만 구성된 embedding vector을 생성해서 아무래도 정밀도가 매우 떨어질 것 같다.
+* 10.18:
